@@ -34,7 +34,7 @@ TARGET_MODULES = [
     "q_proj",
     "v_proj",
 ]
-DATA_PATH = "data/alpaca_data_cleaned.json"
+DATA_PATH = "../data/alpaca_data_cleaned.json"
 
 device_map = "auto"
 world_size = int(os.environ.get('WORLD_SIZE', 1))
@@ -123,6 +123,7 @@ trainer = transformers.Trainer(
         gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
         warmup_steps=100,
         num_train_epochs=EPOCHS,
+        optim="adamw_torch",
         learning_rate=LEARNING_RATE,
         fp16=True,
         logging_steps=20,
