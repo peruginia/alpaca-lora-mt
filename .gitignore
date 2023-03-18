@@ -7,3 +7,4 @@ minimal-llama**
 upload.py
 venv/
 .slurm
+wandb/
