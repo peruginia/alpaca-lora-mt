@@ -25,7 +25,7 @@ export PATH="/ikerlariak/igarcia945/pytorch-build/openmpi/lib:$PATH"
 export LD_LIBRARY_PATH="/ikerlariak/igarcia945/pytorch-build/openmpi/lib:$LD_LIBRARY_PATH"
 
 
-for lang in esp_Latn glg_Latn eus_Latn cat_Latn por_Latn
+for lang in spa_Latn glg_Latn eus_Latn cat_Latn por_Latn
 do
 accelerate launch --mixed_precision fp16 translate.py \
 --sentences_path /ikerlariak/igarcia945/alpaca-lora-mt/data/en.sentences.txt \
