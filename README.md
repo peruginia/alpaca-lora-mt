@@ -44,8 +44,8 @@ use the model with projects like [llama.cpp](https://github.com/ggerganov/llama.
 
 ### Dataset
 
-In addition to `alpaca_data.json`, which contains the original Stanford Alpaca dataset,
-we also include `alpaca_data_cleaned.json`, which has been [stripped of various tokenization artifacts](https://github.com/tloen/alpaca-lora/pull/32)
+In addition to `data/alpaca_data.json`, which contains the original Stanford Alpaca dataset,
+we also include `data/alpaca_data_cleaned.json`, which has been [stripped of various tokenization artifacts](https://github.com/tloen/alpaca-lora/pull/32)
 with the help of @gururise.
 This file is now used by default in the training script.
 

@@ -34,7 +34,7 @@ TARGET_MODULES = [
     "q_proj",
     "v_proj",
 ]
-DATA_PATH = "alpaca_data_cleaned.json"
+DATA_PATH = "data/alpaca_data_cleaned.json"
 
 device_map = "auto"
 world_size = int(os.environ.get('WORLD_SIZE', 1))
