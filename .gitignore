@@ -8,3 +8,5 @@ upload.py
 venv/
 .slurm
 wandb/
+.ipynb_checkpoints
+.idea
