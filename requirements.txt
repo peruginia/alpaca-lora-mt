@@ -6,3 +6,4 @@ accelerate
 bitsandbytes
 git+https://github.com/huggingface/peft.git
 gradio
+torch==2.0.0+cu117
