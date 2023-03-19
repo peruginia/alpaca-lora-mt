@@ -34,11 +34,7 @@ accelerate launch --mixed_precision fp16 translate.py \
 --target_lang "$lang" \
 --model_name facebook/nllb-200-3.3B \
 --max_length 516 \
---num_beams 1 \
---do_sample \
---temperature 0.8 \
---top_k 128 \
---top_p 0.8 \
+--num_beams 4 \
 --num_return_sequences 1
 
 done
