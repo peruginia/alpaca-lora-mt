@@ -79,12 +79,12 @@ PROMPTS = {
         "prompt_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago, testuinguru gehiago ematen duen sarrera batekin batera. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instruzioa:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n{output}"
+            "### Instrukzioa:\n{instruction}\n\n### Sarrera:\n{input}\n\n### Erantzuna:\n{output}"
         ),
         "prompt_no_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instruzioa:\n{instruction}\n\n### Resposta:\n{output}"
+            "### Instrukzioa:\n{instruction}\n\n### Erantzuna:\n{output}"
         ),
     },
     "gl": {
