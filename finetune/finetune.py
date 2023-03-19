@@ -43,7 +43,7 @@ PROMPTS = {
         "prompt_input": (
             "Abaixo está uma instrução que descreve uma tarefa, juntamente com uma entrada que fornece mais contexto. "
             "Escreva uma resposta que complete adequadamente o pedido.\n\n"
-            "### Instrução:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n{output}"
+            "### Instrução:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n{output}"
         ),
         "prompt_no_input": (
             "Abaixo está uma instrução que descreve uma tarefa. "

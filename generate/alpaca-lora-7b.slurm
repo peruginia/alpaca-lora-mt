@@ -5,9 +5,11 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=0
 #SBATCH --mem=50GB
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:0
 #SBATCH --output=.slurm/alpaca-lora-7b.out
 #SBATCH --error=.slurm/alpaca-lora-7b.err
+
+export CUDA_VISIBLE_DEVICES=0
 
 # activate virtual environment
 source ../venv/bin/activate
