@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=alpaca_easy_translate
+#SBATCH --job-name=alpaca_ast
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
 #SBATCH --mem=64G
-#SBATCH --output=alpaca_easy_translate.out.txt
-#SBATCH --error=alpaca_easy_translate.err.txt
+#SBATCH --output=alpaca_ast.out.txt
+#SBATCH --error=alpaca_ast.err.txt
 
 source /ikerlariak/igarcia945/envs/pytorch-tximista/bin/activate
 
@@ -25,7 +25,7 @@ export PATH="/ikerlariak/igarcia945/pytorch-build/openmpi/lib:$PATH"
 export LD_LIBRARY_PATH="/ikerlariak/igarcia945/pytorch-build/openmpi/lib:$LD_LIBRARY_PATH"
 
 
-for lang in spa_Latn glg_Latn eus_Latn cat_Latn por_Latn ast_Latn
+for lang in ast_Latn
 do
 accelerate launch --mixed_precision fp16 translate.py \
 --sentences_path /ikerlariak/igarcia945/alpaca-lora-mt/data/en.sentences.txt \
@@ -34,7 +34,8 @@ accelerate launch --mixed_precision fp16 translate.py \
 --target_lang "$lang" \
 --model_name facebook/nllb-200-3.3B \
 --max_length 516 \
---num_beams 4 \
---num_return_sequences 1
+--num_beams 3 \
+--num_return_sequences 1 \
+--precision fp16
 
 done
