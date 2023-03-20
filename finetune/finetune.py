@@ -1,14 +1,10 @@
 import os
 
-# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import torch
-import torch.nn as nn
-import bitsandbytes as bnb
-from datasets import load_dataset, concatenate_datasets
+from datasets import load_dataset, concatenate_datasets, DatasetDict
 import transformers
 
 from dataclasses import dataclass, field
-from itertools import chain
 from typing import Optional
 import sys
 
@@ -210,12 +206,14 @@ def generate_and_tokenize_prompt(data_point, lang, tokenizer, block_size):
 
 
 def load_data(data_args, tokenizer):
-    data = load_dataset("json", data_files=data_args.train_files)
+    data = DatasetDict()
+    for lang in data_args.dataset_config_names:
+        data[lang] = load_dataset(data_args.dataset_name, lang)
 
     datasets = []
     for lang in data:
         train_data = (
-            data[lang]
+            data[lang]["train"]
             .shuffle()
             .map(
                 lambda x: generate_and_tokenize_prompt(
@@ -316,7 +314,7 @@ class DataTrainingArguments:
         default=None,
         metadata={"help": "The name of the dataset to use (via the datasets library)."},
     )
-    dataset_config_name: Optional[str] = field(
+    dataset_config_names: Optional[str] = field(
         default=None,
         metadata={
             "help": "The configuration name of the dataset to use (via the datasets library)."

@@ -7,11 +7,16 @@ torch_dtype: float16
 dataset_name: ../data/alpaca_mt.py
 dataset_config_names:
   - en
+  - pt
+  - es
+  - ca
+  - eu
+  - gl
 validation_split_percentage: 4
 block_size: 512
 
 # checkpoint settings
-output_dir: out/alpaca-lora-7b
+output_dir: out/alpaca-lora-mt-7b
 overwrite_output_dir: true
 load_best_model_at_end: true
 metric_for_best_model: eval_loss
@@ -49,12 +54,12 @@ target_modules:
 
 # reporting
 report_to: wandb
-run_name: alpaca-lora-7b
+run_name: alpaca-lora-mt-7b
 
 # hub settings
 push_to_hub: true
 resume_from_checkpoint: false
-hub_model_id: HiTZ/alpaca-lora-7b
+hub_model_id: HiTZ/alpaca-lora-mt-7b
 hub_private_repo: true
 
 # performance
