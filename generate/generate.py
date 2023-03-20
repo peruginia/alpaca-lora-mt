@@ -104,80 +104,148 @@ EXAMPLES = {
         ["Tell me about the president of Mexico in 2019.", None, "English"],
         ["Tell me about the king of France in 2019.", None, "English"],
         ["List all Canadian provinces in alphabetical order.", None, "English"],
-        ["Write a Python program that prints the first 10 Fibonacci numbers.", None, "English"],
         [
-            "Write a program that prints the numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'.", None, "English"
+            "Write a Python program that prints the first 10 Fibonacci numbers.",
+            None,
+            "English",
+        ],
+        [
+            "Write a program that prints the numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'.",
+            None,
+            "English",
         ],
         ["Tell me five words that rhyme with 'shock'.", None, "English"],
-        ["Translate the sentence 'I have no mouth but I must scream' into Spanish.", None, "English"],
+        [
+            "Translate the sentence 'I have no mouth but I must scream' into Spanish.",
+            None,
+            "English",
+        ],
     ],
     "pt": [
         ["Conte-me sobre alpacas.", None, "Portuguese"],
         ["Conte-me sobre o presidente do México em 2019.", None, "Portuguese"],
         ["Conte-me sobre o rei da França em 2019.", None, "Portuguese"],
-        ["Liste todas as províncias canadenses em ordem alfabética.", None, "Portuguese"],
         [
-            "Escreva um programa Python que imprima os primeiros 10 números de Fibonacci.", None, "Portuguese"
+            "Liste todas as províncias canadenses em ordem alfabética.",
+            None,
+            "Portuguese",
         ],
         [
-            "Escreva um programa que imprima os números de 1 a 100. Mas para múltiplos de três imprima 'Fizz' em vez do número e para múltiplos de cinco imprima 'Buzz'. Para números que são múltiplos de três e cinco imprima ' FizzBuzz'.", None, "Portuguese"
+            "Escreva um programa Python que imprima os primeiros 10 números de Fibonacci.",
+            None,
+            "Portuguese",
+        ],
+        [
+            "Escreva um programa que imprima os números de 1 a 100. Mas para múltiplos de três imprima 'Fizz' em vez do número e para múltiplos de cinco imprima 'Buzz'. Para números que são múltiplos de três e cinco imprima 'FizzBuzz'.",
+            None,
+            "Portuguese",
         ],
         ["Diga-me cinco palavras que rimam com 'choque'.", None, "Portuguese"],
-        ["Traduza a frase 'Não tenho boca, mas devo gritar' para o espanhol.", None, "Portuguese"],
+        [
+            "Traduza a frase 'Não tenho boca, mas devo gritar' para o espanhol.",
+            None,
+            "Portuguese",
+        ],
     ],
     "es": [
         ["Háblame de las alpacas.", None, "Spanish"],
         ["Háblame del presidente de México en 2019.", None, "Spanish"],
         ["Háblame del rey de Francia en 2019.", None, "Spanish"],
-        ["Lista de todas las provincias canadienses en orden alfabético.", None, "Spanish"],
         [
-            "Escribe un programa en Python que imprima los primeros 10 números de Fibonacci.", None, "Spanish"
+            "Lista de todas las provincias canadienses en orden alfabético.",
+            None,
+            "Spanish",
         ],
         [
-            "Escriba un programa que imprima los números del 1 al 100. Pero para los múltiplos de tres, escriba 'Fizz' en lugar del número y para los múltiplos de cinco, escriba 'Buzz'. Para los números que son múltiplos de tres y de cinco, escriba ' FizzBuzz'.", None, "Spanish"
+            "Escribe un programa en Python que imprima los primeros 10 números de Fibonacci.",
+            None,
+            "Spanish",
+        ],
+        [
+            "Escriba un programa que imprima los números del 1 al 100. Pero para los múltiplos de tres, escriba 'Fizz' en lugar del número y para los múltiplos de cinco, escriba 'Buzz'. Para los números que son múltiplos de tres y de cinco, escriba 'FizzBuzz'.",
+            None,
+            "Spanish",
         ],
         ["Dime cinco palabras que rimen con 'choque'.", None, "Spanish"],
-        ["Traducir la oración 'No tengo boca pero debo gritar' al inglés.", None, "Spanish"],
+        [
+            "Traducir la oración 'No tengo boca pero debo gritar' al inglés.",
+            None,
+            "Spanish",
+        ],
     ],
     "ca": [
         ["Parla'm de les alpaques.", None, "Catalan"],
         ["Parla'm del president de Mèxic el 2019.", None, "Catalan"],
         ["Parla'm del rei de França el 2019.", None, "Catalan"],
-        ["Llista totes les províncies canadenques per ordre alfabètic.", None, "Catalan"],
         [
-            "Escriu un programa Python que imprimeixi els primers 10 nombres de Fibonacci.", None, "Catalan"
+            "Llista totes les províncies canadenques per ordre alfabètic.",
+            None,
+            "Catalan",
         ],
         [
-            "Escriu un programa que imprimeixi els números de l'1 al 100. Però per a múltiples de tres escriviu 'Fizz' en comptes del nombre i per als múltiples de cinc imprimiu 'Buzz'. Per als números que són múltiples de tres i cinc imprimiu' FizzBuzz'.", None, "Catalan"
+            "Escriu un programa Python que imprimeixi els primers 10 nombres de Fibonacci.",
+            None,
+            "Catalan",
+        ],
+        [
+            "Escriu un programa que imprimeixi els números de l'1 al 100. Però per a múltiples de tres escriviu 'Fizz' en comptes del nombre i per als múltiples de cinc imprimiu 'Buzz'. Per als números que són múltiples de tres i cinc imprimiu 'FizzBuzz'.",
+            None,
+            "Catalan",
         ],
         ["Digues-me cinc paraules que rimin amb 'xoc'.", None, "Catalan"],
-        ["Tradueix la frase 'No tinc boca, però he de cridar' al castellà.", None, "Catalan"],
+        [
+            "Tradueix la frase 'No tinc boca, però he de cridar' al castellà.",
+            None,
+            "Catalan",
+        ],
     ],
     "eu": [
         ["Hitz egin alpakei buruz.", None, "Basque"],
         ["Hitz egin 2019ko Mexikoko presidenteaz.", None, "Basque"],
         ["Hitz egin 2019ko Frantziako erregeaz.", None, "Basque"],
         ["Zerrendatu Kanadako probintzia guztiak ordena alfabetikoan.", None, "Basque"],
-        ["Idatzi lehen 10 Fibonacci zenbakiak inprimatzen dituen Python programa bat.", None, "Basque"],
         [
-            "Idatzi 1etik 100era bitarteko zenbakiak inprimatzen dituen programa bat. Baina hiruren multiploetarako inprimatu 'Fizz' zenbakiaren ordez eta bosten multiploetarako inprimatu 'Buzz'. Hiru eta bosten multiploak diren zenbakietarako inprimatu ' FizzBuzz'.", None, "Basque"
+            "Idatzi lehen 10 Fibonacci zenbakiak inprimatzen dituen Python programa bat.",
+            None,
+            "Basque",
+        ],
+        [
+            "Idatzi 1etik 100era bitarteko zenbakiak inprimatzen dituen programa bat. Baina hiruren multiploetarako inprimatu 'Fizz' zenbakiaren ordez eta bosten multiploetarako inprimatu 'Buzz'. Hiru eta bosten multiploak diren zenbakietarako inprimatu 'FizzBuzz'.",
+            None,
+            "Basque",
         ],
         ["Esan 'deskarga' hitzaren errima duten bost hitz.", None, "Basque"],
-        ["Itzuli 'Ez dut ahorik baina garrasi egin behar dut' esaldia gaztelaniara.", None, "Basque"],
+        [
+            "Itzuli 'Ez dut ahorik baina garrasi egin behar dut' esaldia gaztelaniara.",
+            None,
+            "Basque",
+        ],
     ],
     "gl": [
         ["Fálame de alpacas.", None, "Galician"],
         ["Fálame do presidente de México en 2019.", None, "Galician"],
         ["Fálame do rei de Francia en 2019.", None, "Galician"],
-        ["Enumere todas as provincias canadenses por orde alfabética.", None, "Galician"],
         [
-            "Escribe un programa Python que imprima os primeiros 10 números de Fibonacci.", None, "Galician"
+            "Enumere todas as provincias canadenses por orde alfabética.",
+            None,
+            "Galician",
         ],
         [
-            "Escribe un programa que imprima os números do 1 ao 100. Pero para múltiplos de tres escribe 'Fizz' en lugar do número e para os múltiplos de cinco imprime 'Buzz'. Para números que son múltiplos de tres e cinco imprime ' FizzBuzz'.", None, "Galician"
+            "Escribe un programa Python que imprima os primeiros 10 números de Fibonacci.",
+            None,
+            "Galician",
+        ],
+        [
+            "Escribe un programa que imprima os números do 1 ao 100. Pero para múltiplos de tres escribe 'Fizz' en lugar do número e para os múltiplos de cinco imprime 'Buzz'. Para números que son múltiplos de tres e cinco imprime 'FizzBuzz'.",
+            None,
+            "Galician",
         ],
         ["Dime cinco palabras que riman con 'choque'.", None, "Galician"],
-        ["Traducir ao castelán a frase 'Non teño boca pero debo berrar'.", None, "Galician"],
+        [
+            "Traducir ao castelán a frase 'Non teño boca pero debo berrar'.",
+            None,
+            "Galician",
+        ],
     ],
 }
 
@@ -206,7 +274,9 @@ def load_model_tokenizer(base_model_name, lora_model_name):
             torch_dtype=torch.float16,
             device_map="auto",
         )
-        lora_model = PeftModel.from_pretrained(base_model, lora_model_name, torch_dtype=torch.float16)
+        lora_model = PeftModel.from_pretrained(
+            base_model, lora_model_name, torch_dtype=torch.float16
+        )
     elif device == "mps":
         base_model = LlamaForCausalLM.from_pretrained(
             base_model_name,
@@ -276,7 +346,9 @@ def evaluate(
         )
         model = base_model
     elif "lora" in model_name:
-        lora_model = PeftModel.from_pretrained(base_model, model_name, torch_dtype=torch.float16)
+        lora_model = PeftModel.from_pretrained(
+            base_model, model_name, torch_dtype=torch.float16
+        )
         model = lora_model
     data_point = {"instruction": instruction, "input": input}
     prompt = generate_prompt(data_point, LANG_CODES[language])
@@ -286,9 +358,7 @@ def evaluate(
         temperature=temperature,
         top_p=top_p,
         top_k=top_k,
-        num_beams=1
-        if decoding_strategy in ["greedy", "multinomial"]
-        else num_beams,
+        num_beams=1 if decoding_strategy in ["greedy", "multinomial"] else num_beams,
         do_sample=decoding_strategy not in ["greedy", "beam-search"],
         **kwargs,
     )
@@ -338,13 +408,13 @@ demo = gr.Interface(
             value="HiTZ/alpaca-lora-7b",
             choices=[
                 "HiTZ/alpaca-lora-7b",
-                #"chansung/alpaca-lora-13b",
-                #"chansung/alpaca-lora-30b",
+                # "chansung/alpaca-lora-13b",
+                # "chansung/alpaca-lora-30b",
                 "22h/cabrita-lora-v0-1",
                 "decapoda-research/llama-7b-hf",
-                #"decapoda-research/llama-13b-hf",
-                #"decapoda-research/llama-30b-hf",
-                #"decapoda-research/llama-65b-hf",
+                # "decapoda-research/llama-13b-hf",
+                # "decapoda-research/llama-30b-hf",
+                # "decapoda-research/llama-65b-hf",
             ],
             label="Model",
             interactive=True,
@@ -405,7 +475,9 @@ demo = gr.Interface(
     ],
     title="🦙🌲 Alpaca-LoRA",
     description="Alpaca-LoRA is a 7B-parameter LLaMA model finetuned to follow instructions. It is trained on the [Stanford Alpaca](https://github.com/tatsu-lab/stanford_alpaca) dataset and makes use of the Huggingface LLaMA implementation. For more information, please visit [the project's website](https://github.com/tloen/alpaca-lora).",
-    examples=[example for example_list in EXAMPLES.values() for example in example_list]
+    examples=[
+        example for example_list in EXAMPLES.values() for example in example_list
+    ],
 )
 demo.queue(concurrency_count=1)
 demo.launch()
