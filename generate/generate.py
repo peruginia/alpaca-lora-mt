@@ -332,16 +332,23 @@ demo = gr.Interface(
             ],
             label="Prompt Language",
             interactive=True,
+            info="Select a language for the prompt.",
         ),
         gr.components.Radio(
             value="HiTZ/alpaca-lora-7b",
             choices=[
                 "HiTZ/alpaca-lora-7b",
+                #"chansung/alpaca-lora-13b",
+                #"chansung/alpaca-lora-30b",
                 "22h/cabrita-lora-v0-1",
-                "decapoda-research/llama-7b-hf"
+                "decapoda-research/llama-7b-hf",
+                #"decapoda-research/llama-13b-hf",
+                #"decapoda-research/llama-30b-hf",
+                #"decapoda-research/llama-65b-hf",
             ],
             label="Model",
             interactive=True,
+            info="Select a model to use for generation. LLaMa models are pretrained-only, LoRA models are fine-tuned on the Alpaca dataset.",
         ),
         gr.components.Slider(
             minimum=0,
