@@ -31,72 +31,72 @@ PROMPTS = {
         "prompt_input": (
             "Below is an instruction that describes a task, paired with an input that provides further context. "
             "Write a response that appropriately completes the request.\n\n"
-            "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n{output}"
+            "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n"
         ),
         "prompt_no_input": (
             "Below is an instruction that describes a task. "
             "Write a response that appropriately completes the request.\n\n"
-            "### Instruction:\n{instruction}\n\n### Response:\n{output}"
+            "### Instruction:\n{instruction}\n\n### Response:\n"
         ),
     },
     "pt": {
         "prompt_input": (
             "Abaixo está uma instrução que descreve uma tarefa, juntamente com uma entrada que fornece mais contexto. "
             "Escreva uma resposta que complete adequadamente o pedido.\n\n"
-            "### Instrução:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n{output}"
+            "### Instrução:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
         "prompt_no_input": (
             "Abaixo está uma instrução que descreve uma tarefa. "
             "Escreva uma resposta que complete adequadamente o pedido.\n\n"
-            "### Instrução:\n{instruction}\n\n### Resposta:\n{output}"
+            "### Instrução:\n{instruction}\n\n### Resposta:\n"
         ),
     },
     "es": {
         "prompt_input": (
             "A continuación se muestra una instrucción que describe una tarea, junto con una entrada que proporciona más contexto. "
             "Escribe una respuesta que complete adecuadamente la petición.\n\n"
-            "### Instrucción:\n{instruction}\n\n### Entrada:\n{input}\n\n### Respuesta:\n{output}"
+            "### Instrucción:\n{instruction}\n\n### Entrada:\n{input}\n\n### Respuesta:\n"
         ),
         "prompt_no_input": (
             "A continuación se muestra una instrucción que describe una tarea. "
             "Escribe una respuesta que complete adecuadamente la petición.\n\n"
-            "### Instrucción:\n{instruction}\n\n### Respuesta:\n{output}"
+            "### Instrucción:\n{instruction}\n\n### Respuesta:\n"
         ),
     },
     "ca": {
         "prompt_input": (
             "A continuació es mostra una instrucció que descriu una tasca, juntament amb una entrada que proporciona més context. "
             "Escriviu una resposta que completi adequadament la petició.\n\n"
-            "### Instrucció:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n{output}"
+            "### Instrucció:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
         "prompt_no_input": (
             "A continuació es mostra una instrucció que descriu una tasca. "
             "Escriviu una resposta que completi adequadament la petició.\n\n"
-            "### Instrucció:\n{instruction}\n\n### Resposta:\n{output}"
+            "### Instrucció:\n{instruction}\n\n### Resposta:\n"
         ),
     },
     "eu": {
         "prompt_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago, testuinguru gehiago ematen duen sarrera batekin batera. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instrukzioa:\n{instruction}\n\n### Sarrera:\n{input}\n\n### Erantzuna:\n{output}"
+            "### Instrukzioa:\n{instruction}\n\n### Sarrera:\n{input}\n\n### Erantzuna:\n"
         ),
         "prompt_no_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instrukzioa:\n{instruction}\n\n### Erantzuna:\n{output}"
+            "### Instrukzioa:\n{instruction}\n\n### Erantzuna:\n"
         ),
     },
     "gl": {
-        "prompt_input" :(
+        "prompt_input": (
             "A seguinte é unha instrución que describe unha tarefa, xunto cunha entrada que proporciona máis contexto. "
             "Escriba unha resposta que complete correctamente a solicitude.\n\n"
-            "### Instrución:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n{output}"
+            "### Instrución:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
-        "prompt_no_input":(
+        "prompt_no_input": (
             "A seguinte é unha instrución que describe unha tarefa. "
             "Escriba unha resposta que complete correctamente a solicitude.\n\n"
-            "### Instrución:\n{instruction}\n\n### Resposta:\n{output}"
+            "### Instrución:\n{instruction}\n\n### Resposta:\n"
         ),
     },
 }
@@ -180,6 +180,35 @@ def tokenize(prompt, tokenizer, block_size):
     }
 
 
+def generate_and_tokenize_prompt(data_point, lang, tokenizer, block_size):
+    # This function masks out the labels for the input,
+    # so that our loss is computed only on the response.
+    user_prompt = generate_prompt(data_point, lang)
+    len_user_prompt_tokens = (
+        len(
+            tokenizer(
+                user_prompt,
+                truncation=True,
+                max_length=block_size + 1,
+                padding="max_length",
+            )["input_ids"]
+        )
+        - 1
+    )  # no eos token
+    full_tokens = tokenizer(
+        user_prompt + data_point["output"],
+        truncation=True,
+        max_length=block_size + 1,
+        padding="max_length",
+    )["input_ids"][:-1]
+    return {
+        "input_ids": full_tokens,
+        "labels": [-100] * len_user_prompt_tokens
+        + full_tokens[len_user_prompt_tokens:],
+        "attention_mask": [1] * (len(full_tokens)),
+    }
+
+
 def load_data(data_args, tokenizer):
     data = load_dataset("json", data_files=data_args.train_files)
 
@@ -189,8 +218,8 @@ def load_data(data_args, tokenizer):
             data[lang]
             .shuffle()
             .map(
-                lambda x: tokenize(
-                    generate_prompt(x, lang), tokenizer, data_args.block_size
+                lambda x: generate_and_tokenize_prompt(
+                    x, lang, tokenizer, data_args.block_size
                 )
             )
         )
@@ -225,7 +254,7 @@ def train(training_args, model, tokenizer, train_data, val_data):
     ).__get__(model, type(model))
 
     trainer.train()
-    
+
     trainer.save_model()
 
     model.save_pretrained(training_args.output_dir)

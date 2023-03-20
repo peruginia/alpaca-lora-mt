@@ -19,72 +19,72 @@ PROMPTS = {
         "prompt_input": (
             "Below is an instruction that describes a task, paired with an input that provides further context. "
             "Write a response that appropriately completes the request.\n\n"
-            "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:"
+            "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n"
         ),
         "prompt_no_input": (
             "Below is an instruction that describes a task. "
             "Write a response that appropriately completes the request.\n\n"
-            "### Instruction:\n{instruction}\n\n### Response:"
+            "### Instruction:\n{instruction}\n\n### Response:\n"
         ),
     },
     "pt": {
         "prompt_input": (
             "Abaixo está uma instrução que descreve uma tarefa, juntamente com uma entrada que fornece mais contexto. "
             "Escreva uma resposta que complete adequadamente o pedido.\n\n"
-            "### Instrução:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:"
+            "### Instrução:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
         "prompt_no_input": (
             "Abaixo está uma instrução que descreve uma tarefa. "
             "Escreva uma resposta que complete adequadamente o pedido.\n\n"
-            "### Instrução:\n{instruction}\n\n### Resposta:"
+            "### Instrução:\n{instruction}\n\n### Resposta:\n"
         ),
     },
     "es": {
         "prompt_input": (
             "A continuación se muestra una instrucción que describe una tarea, junto con una entrada que proporciona más contexto. "
             "Escribe una respuesta que complete adecuadamente la petición.\n\n"
-            "### Instrucción:\n{instruction}\n\n### Entrada:\n{input}\n\n### Respuesta:"
+            "### Instrucción:\n{instruction}\n\n### Entrada:\n{input}\n\n### Respuesta:\n"
         ),
         "prompt_no_input": (
             "A continuación se muestra una instrucción que describe una tarea. "
             "Escribe una respuesta que complete adecuadamente la petición.\n\n"
-            "### Instrucción:\n{instruction}\n\n### Respuesta:"
+            "### Instrucción:\n{instruction}\n\n### Respuesta:\n"
         ),
     },
     "ca": {
         "prompt_input": (
             "A continuació es mostra una instrucció que descriu una tasca, juntament amb una entrada que proporciona més context. "
             "Escriviu una resposta que completi adequadament la petició.\n\n"
-            "### Instrucció:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:"
+            "### Instrucció:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
         "prompt_no_input": (
             "A continuació es mostra una instrucció que descriu una tasca. "
             "Escriviu una resposta que completi adequadament la petició.\n\n"
-            "### Instrucció:\n{instruction}\n\n### Resposta:"
+            "### Instrucció:\n{instruction}\n\n### Resposta:\n"
         ),
     },
     "eu": {
         "prompt_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago, testuinguru gehiago ematen duen sarrera batekin batera. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instrukzioa:\n{instruction}\n\n### Sarrera:\n{input}\n\n### Erantzuna:"
+            "### Instrukzioa:\n{instruction}\n\n### Sarrera:\n{input}\n\n### Erantzuna:\n"
         ),
         "prompt_no_input": (
             "Azpian ataza bat deskribatzen duen instruzio bat dago. "
             "Idatzi eskaera behar bezala betetzen duen erantzuna.\n\n"
-            "### Instrukzioa:\n{instruction}\n\n### Erantzuna:"
+            "### Instrukzioa:\n{instruction}\n\n### Erantzuna:\n"
         ),
     },
     "gl": {
         "prompt_input": (
             "A seguinte é unha instrución que describe unha tarefa, xunto cunha entrada que proporciona máis contexto. "
             "Escriba unha resposta que complete correctamente a solicitude.\n\n"
-            "### Instrución:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:"
+            "### Instrución:\n{instruction}\n\n### Entrada:\n{input}\n\n### Resposta:\n"
         ),
         "prompt_no_input": (
             "A seguinte é unha instrución que describe unha tarefa. "
             "Escriba unha resposta que complete correctamente a solicitude.\n\n"
-            "### Instrución:\n{instruction}\n\n### Resposta:"
+            "### Instrución:\n{instruction}\n\n### Resposta:\n"
         ),
     },
 }
