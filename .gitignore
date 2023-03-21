@@ -10,3 +10,4 @@ venv/
 wandb/
 .ipynb_checkpoints
 .idea
+flagged/

@@ -4,6 +4,7 @@ import transformers
 import gradio as gr
 
 from transformers import LlamaTokenizer, LlamaForCausalLM, GenerationConfig
+from transformers.generation import top_k_top_p_filtering
 
 LANG_CODES = {
     "English": "en",
@@ -318,6 +319,102 @@ def generate_prompt(data_point, lang):
         return PROMPTS[lang]["prompt_no_input"].format_map(data_point)
 
 
+def run_model(model, input_ids: torch.tensor, decoder_args):
+    gen_inputs = model.prepare_inputs_for_generation(
+        input_ids=input_ids, **decoder_args
+    )
+    decoder_outputs = model(
+        **gen_inputs,
+    )
+
+    # Get the logits for the possible words
+    decoder_args = model._update_model_kwargs_for_generation(
+        decoder_outputs,
+        decoder_args,
+        is_encoder_decoder=False,
+    )
+
+    return decoder_outputs.logits, decoder_args
+
+
+def test_GPT_unconstrained(
+    tokenizer,
+    model,
+    sentence,
+    language,
+    temperature: float = 0.7,
+    top_p: float = 1.0,
+    top_k: int = 40,
+    max_new_tokens: int = 256,
+    num_beams: int = 4,
+    generation_mode: str = "greedy",
+):
+
+    # sentence = " ".join(sentence.strip().split())
+
+    input_text = sentence
+
+    with torch.no_grad():
+        model_inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
+
+        encoder_output = model(
+            input_ids=model_inputs["input_ids"],
+            attention_mask=model_inputs["attention_mask"],
+        )
+
+        decoder_args = {
+            "attention_mask": model_inputs["attention_mask"],
+            "use_cache": True,
+            "encoder_outputs": encoder_output,
+        }
+
+        inputs_ids = model_inputs["input_ids"]
+
+        print("UNCONSTRAINED")
+        for x in inputs_ids[0]:
+            print(x, tokenizer.decode(x))
+
+        while (
+            len(inputs_ids[0]) < max_new_tokens
+            and inputs_ids[0][-1] != tokenizer.eos_token_id
+        ):
+            # print(inputs_ids)
+            logits, decoder_args = run_model(
+                model,
+                inputs_ids,
+                decoder_args,
+            )
+
+            if generation_mode == "greedy":
+                logits = logits[:, -1, :]
+                logits = torch.nn.functional.softmax(logits, dim=-1)
+                next_word_id = torch.argmax(logits, dim=-1).unsqueeze(0)
+                print(
+                    next_word_id[0],
+                    logits[0, next_word_id[0]],
+                    tokenizer.decode(next_word_id[0]),
+                )
+            elif generation_mode == "multinomial":
+                logits = logits[:, -1, :] / temperature
+                filtered_logits = top_k_top_p_filtering(
+                    logits,
+                    top_k=top_k,
+                    top_p=top_p,
+                )
+                probs = torch.nn.functional.softmax(filtered_logits, dim=-1)
+                next_word_id = torch.multinomial(probs, num_samples=1)
+            else:
+                raise ValueError(
+                    f'generation_mode "{generation_mode}" not supported. Use greedy or multinomial.'
+                )
+
+            inputs_ids = torch.cat([inputs_ids, next_word_id], dim=1)
+            # print([15948, 27, 27, 27], logits[0, [15948, 27, 27, 27]])
+            # print(tokenizer.decode(next_word_id[0]), logits[0, next_word_id])
+            output = tokenizer.batch_decode(inputs_ids, skip_special_tokens=True)[0]
+            yield output.split(f"### {RESPONSE[LANG_CODES[language]]}:")[1].strip()
+
+
 def evaluate(
     instruction,
     input,
@@ -375,8 +472,56 @@ def evaluate(
     return output.split(f"### {RESPONSE[LANG_CODES[language]]}:")[1].strip()
 
 
+def generate(
+    instruction,
+    input,
+    language,
+    model_name,
+    temperature=0.1,
+    top_p=0.75,
+    top_k=40,
+    max_new_tokens=256,
+    num_beams=4,
+    generation_mode="multinomial",
+    **kwargs,
+):
+    global base_model
+    global lora_model
+    if model_name == BASE_MODEL:
+        model = base_model
+    elif model_name == LORA_MODEL:
+        model = lora_model
+    elif "llama" in model_name:
+        base_model = LlamaForCausalLM.from_pretrained(
+            model_name,
+            load_in_8bit=True,
+            torch_dtype=torch.float16,
+            device_map="auto",
+        )
+        model = base_model
+    elif "lora" in model_name:
+        lora_model = PeftModel.from_pretrained(
+            base_model, model_name, torch_dtype=torch.float16
+        )
+        model = lora_model
+    data_point = {"instruction": instruction, "input": input}
+    prompt = generate_prompt(data_point, LANG_CODES[language])
+    for x in test_GPT_unconstrained(
+        tokenizer,
+        model,
+        prompt,
+        language=language,
+        temperature=temperature,
+        top_p=top_p,
+        top_k=top_k,
+        max_new_tokens=max_new_tokens,
+        generation_mode=generation_mode,
+    ):
+        yield x
+
+
 demo = gr.Interface(
-    fn=evaluate,
+    fn=generate,
     inputs=[
         gr.components.Textbox(
             lines=2,
@@ -460,7 +605,8 @@ demo = gr.Interface(
             info="Total numbers of beams for beam-search decoding.",
         ),
         gr.components.Radio(
-            choices=["multinomial", "greedy", "beam-search", "beam-search multinomial"],
+            # choices=["multinomial", "greedy", "beam-search", "beam-search multinomial"],
+            choices=["multinomial", "greedy"],
             label="Decoding strategy",
             value="multinomial",
             info="Greedy decoding is fast and produces deterministic results, "

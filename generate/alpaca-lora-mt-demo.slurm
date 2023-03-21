@@ -9,7 +9,7 @@
 #SBATCH --output=.slurm/alpaca-lora-mt-demo.out
 #SBATCH --error=.slurm/alpaca-lora-mt-demo.err
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 
 # activate virtual environment
 source ../venv/bin/activate
