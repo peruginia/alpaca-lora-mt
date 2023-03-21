@@ -8,10 +8,10 @@ dataset_name: ../data/alpaca_mt.py
 dataset_config_names:
   - en
 validation_split_percentage: 4
-block_size: 512
+block_size: 256
 
 # checkpoint settings
-output_dir: out/alpaca-lora-7b
+output_dir: out/alpaca-lora-7b-en
 overwrite_output_dir: true
 load_best_model_at_end: true
 metric_for_best_model: eval_loss
@@ -26,10 +26,10 @@ evaluation_strategy: steps
 logging_steps: 10
 eval_steps: 100
 
-# batch size: 8 batch size * 16 gradaccum * 1 GPUs = 128
-per_device_train_batch_size: 8
-per_device_eval_batch_size: 8
-gradient_accumulation_steps: 16
+# batch size: 26 batch size * 5 gradaccum * 1 GPUs = 130
+per_device_train_batch_size: 26
+per_device_eval_batch_size: 26
+gradient_accumulation_steps: 5
 
 # optimizer settings
 optim: adamw_torch
@@ -49,12 +49,12 @@ target_modules:
 
 # reporting
 report_to: wandb
-run_name: alpaca-lora-7b
+run_name: alpaca-lora-7b-en
 
 # hub settings
 push_to_hub: true
 resume_from_checkpoint: false
-hub_model_id: HiTZ/alpaca-lora-7b
+hub_model_id: HiTZ/alpaca-lora-7b-en
 hub_private_repo: true
 
 # performance

@@ -1,0 +1,69 @@
+# model arguments
+model_name_or_path: decapoda-research/llama-7b-hf
+use_fast_tokenizer: false
+torch_dtype: float16
+
+# dataset arguments
+dataset_name: ../data/alpaca_mt.py
+dataset_config_names:
+  - en
+  - pt
+  - es
+  - ca
+  - eu
+  - gl
+validation_split_percentage: 4
+block_size: 256
+
+# checkpoint settings
+output_dir: out/alpaca-lora-7b-en-pt-es-ca-eu-gl
+overwrite_output_dir: true
+load_best_model_at_end: true
+metric_for_best_model: eval_loss
+greater_is_better: false
+save_steps: 100
+save_total_limit: 4
+
+# evaluation
+do_train: true
+do_eval: true
+evaluation_strategy: steps
+logging_steps: 10
+eval_steps: 100
+
+# batch size: 26 batch size * 5 gradaccum * 1 GPUs = 130
+per_device_train_batch_size: 26
+per_device_eval_batch_size: 26
+gradient_accumulation_steps: 5
+
+# optimizer settings
+optim: adamw_torch
+learning_rate: 0.0003
+weight_decay: 0
+num_train_epochs: 1
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+
+# lora settings
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - v_proj
+
+# reporting
+report_to: wandb
+run_name: alpaca-lora-7b-en-pt-es-ca-eu-gl
+
+# hub settings
+push_to_hub: true
+resume_from_checkpoint: false
+hub_model_id: HiTZ/alpaca-lora-7b-en-pt-es-ca-eu-gl
+hub_private_repo: true
+
+# performance
+# bf16: true
+fp16: true
+torch_compile: false
+ddp_find_unused_parameters: false
