@@ -186,7 +186,6 @@ def generate_and_tokenize_prompt(data_point, lang, tokenizer, block_size):
                 user_prompt,
                 truncation=True,
                 max_length=block_size + 1,
-                padding="max_length",
             )["input_ids"]
         )
         - 1
