@@ -19,6 +19,6 @@ export TRANSFORMERS_CACHE="/gaueko0/transformers_cache/"
 export WANDB_PROJECT=alpaca-lora-mt
 
 # resume an existing run in cases of failure
-export WANDB_RESUME=auto
+# export WANDB_RESUME=auto
 
 srun torchrun --standalone --nproc_per_node=1 finetune.py configs/alpaca-lora-mt-7b.yaml
