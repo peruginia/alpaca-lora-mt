@@ -4,7 +4,7 @@ use_fast_tokenizer: false
 torch_dtype: float16
 
 # dataset arguments
-dataset_name: ../data/alpaca_mt.py
+dataset_name: HiTZ/alpaca_mt
 dataset_config_names:
   - eu
 validation_split_percentage: 4

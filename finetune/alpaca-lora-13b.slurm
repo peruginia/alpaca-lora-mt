@@ -21,6 +21,6 @@ export WANDB_PROJECT=alpaca-lora-mt
 # resume an existing run in cases of failure
 # export WANDB_RESUME=auto
 
-for lang in en es eu; do
+for lang in en pt es ca eu gl at; do
     srun torchrun --standalone --nproc_per_node=1 finetune.py configs/alpaca-lora-13b-"$lang".yaml
 done
