@@ -167,6 +167,7 @@ def load_model_tokenizer(model_args):
 
 
 def generate_prompt(data_point, lang):
+    lang = "en"
     if data_point["input"]:
         return PROMPTS[lang]["prompt_input"].format_map(data_point)
     else:
@@ -245,7 +246,7 @@ def load_data(data_args, tokenizer):
     return train_data, val_data
 
 
-def train(training_args, model, tokenizer, train_data, val_data):
+def train(model_args, data_args, training_args, model, tokenizer, train_data, val_data):
     trainer = transformers.Trainer(
         model=model,
         train_dataset=train_data,
@@ -269,6 +270,25 @@ def train(training_args, model, tokenizer, train_data, val_data):
     trainer.train()
 
     trainer.save_model()
+
+    kwargs = {
+        "finetuned_from": model_args.model_name_or_path,
+        "tasks": "text-generation",
+    }
+    if data_args.dataset_name is not None:
+        kwargs["dataset_tags"] = data_args.dataset_name
+        if data_args.dataset_config_names is not None:
+            kwargs["dataset_args"] = data_args.dataset_config_names
+            kwargs[
+                "dataset"
+            ] = f"{data_args.dataset_name} {data_args.dataset_config_names}"
+        else:
+            kwargs["dataset"] = data_args.dataset_name
+
+    if training_args.push_to_hub:
+        trainer.push_to_hub(**kwargs)
+    else:
+        trainer.create_model_card(**kwargs)
 
     model.save_pretrained(
         training_args.output_dir,
@@ -395,7 +415,7 @@ def main():
 
     model, tokenizer = load_model_tokenizer(model_args)
     train_files, validation_file = load_data(data_args, tokenizer)
-    train(training_args, model, tokenizer, train_files, validation_file)
+    train(model_args, data_args, training_args, model, tokenizer, train_files, validation_file)
 
 
 if __name__ == "__main__":
