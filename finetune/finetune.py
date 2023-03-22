@@ -104,7 +104,7 @@ PROMPTS = {
         "prompt_no_input": (
             "De siguío amuésase una instrucción que describe una xera. "
             "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
-            "### Instrucción:\n{instrucción}\n\n## Respuesta:\n"
+            "### Instrucción:\n{instruction}\n\n## Respuesta:\n"
         ),
     },
 }
@@ -271,7 +271,9 @@ def train(training_args, model, tokenizer, train_data, val_data):
     trainer.save_model()
 
     model.save_pretrained(
-        training_args.output_dir, push_to_hub=training_args.push_to_hub
+        training_args.output_dir,
+        push_to_hub=training_args.push_to_hub,
+        repo_id=training_args.hub_model_id,
     )
 
     print("\n If there's a warning about missing keys above, please disregard :)")
