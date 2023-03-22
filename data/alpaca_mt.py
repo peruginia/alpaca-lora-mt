@@ -103,7 +103,7 @@ PROMPTS = {
         "prompt_no_input": (
             "De siguío amuésase una instrucción que describe una xera. "
             "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
-            "### Instrucción:\n{instrucción}\n\n## Respuesta:\n"
+            "### Instrucción:\n{instruction}\n\n## Respuesta:\n"
         ),
     },
 }
