@@ -88,6 +88,18 @@ PROMPTS = {
             "### Instrución:\n{instruction}\n\n### Resposta:\n"
         ),
     },
+    "at": {
+        "prompt_input": (
+            "De siguío amuésase una instrucción que describe una xera, xuntu con una entrada qu'apurre más contestu. "
+            "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
+            "### Instrucción:\n{instruction}\n\n## Entrada:\n{input}\n\n### Respuesta:\n"
+        ),
+        "prompt_no_input": (
+            "De siguío amuésase una instrucción que describe una xera. "
+            "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
+            "### Instrucción:\n{instrucción}\n\n## Respuesta:\n"
+        ),
+    },
 }
 
 RESPONSE = {

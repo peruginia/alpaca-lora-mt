@@ -95,6 +95,18 @@ PROMPTS = {
             "### Instrución:\n{instruction}\n\n### Resposta:\n"
         ),
     },
+    "at": {
+        "prompt_input": (
+            "De siguío amuésase una instrucción que describe una xera, xuntu con una entrada qu'apurre más contestu. "
+            "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
+            "### Instrucción:\n{instruction}\n\n## Entrada:\n{input}\n\n### Respuesta:\n"
+        ),
+        "prompt_no_input": (
+            "De siguío amuésase una instrucción que describe una xera. "
+            "Escribe una respuesta que complete afechiscamente'l pidimientu.\n\n"
+            "### Instrucción:\n{instrucción}\n\n## Respuesta:\n"
+        ),
+    },
 }
 
 
@@ -250,11 +262,17 @@ def train(training_args, model, tokenizer, train_data, val_data):
         lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
     ).__get__(model, type(model))
 
+    model.config.to_json_file(
+        os.path.join(training_args.output_dir, "adapter_config.json")
+    )
+
     trainer.train()
 
     trainer.save_model()
 
-    model.save_pretrained(training_args.output_dir)
+    model.save_pretrained(
+        training_args.output_dir, push_to_hub=training_args.push_to_hub
+    )
 
     print("\n If there's a warning about missing keys above, please disregard :)")
 
