@@ -140,15 +140,19 @@ def load_model_tokenizer(model_args):
     if "llama" in model_args.model_name_or_path:
         tokenizer = LlamaTokenizer.from_pretrained(
             model_args.model_name_or_path,
-            add_eos_token=True,
             use_fast=model_args.use_fast_tokenizer,
         )
     else:
         tokenizer = AutoTokenizer.from_pretrained(
             model_args.model_name_or_path,
-            add_eos_token=True,
             use_fast=model_args.use_fast_tokenizer,
         )
+
+    tokenizer.add_special_tokens(
+        {"pad_token": "[PAD]"}
+    )  # Add pad token to the tokenizer
+    model.resize_token_embeddings(len(tokenizer))  # Resize the model's embeddings
+    tokenizer.padding_side = "left"  # Allow batched inference
 
     model = prepare_model_for_int8_training(model)
 
@@ -161,7 +165,6 @@ def load_model_tokenizer(model_args):
         task_type="CAUSAL_LM",
     )
     model = get_peft_model(model, config)
-    tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos token
 
     return model, tokenizer
 
@@ -174,47 +177,21 @@ def generate_prompt(data_point, lang):
         return PROMPTS[lang]["prompt_no_input"].format_map(data_point)
 
 
-def tokenize(prompt, tokenizer, block_size):
-    # there's probably a way to do this with the tokenizer settings
-    # but again, gotta move fast
-    result = tokenizer(
-        prompt,
-        truncation=True,
-        max_length=block_size + 1,
-        padding="max_length",
-    )
-    return {
-        "input_ids": result["input_ids"][:-1],
-        "attention_mask": result["attention_mask"][:-1],
-    }
-
-
 def generate_and_tokenize_prompt(data_point, lang, tokenizer, block_size):
-    # This function masks out the labels for the input,
-    # so that our loss is computed only on the response.
-    user_prompt = generate_prompt(data_point, lang)
-    len_user_prompt_tokens = (
-        len(
-            tokenizer(
-                user_prompt,
-                truncation=True,
-                max_length=block_size + 1,
-            )["input_ids"]
-        )
-        - 1
-    )  # no eos token
-    full_tokens = tokenizer(
-        user_prompt + data_point["output"],
-        truncation=True,
-        max_length=block_size + 1,
-        padding="max_length",
-    )["input_ids"][:-1]
-    return {
-        "input_ids": full_tokens,
-        "labels": [-100] * len_user_prompt_tokens
-        + full_tokens[len_user_prompt_tokens:],
-        "attention_mask": [1] * (len(full_tokens)),
-    }
+    user_prompt = generate_prompt(data_point, lang) + data_point["output"]
+    user_prompt = tokenizer(
+        user_prompt, truncation=True, max_length=block_size, return_tensors=None
+    )
+    if (
+        user_prompt["input_ids"][-1] != tokenizer.eos_token_id
+        and len(user_prompt["input_ids"]) < block_size
+    ):
+        user_prompt["input_ids"].append(tokenizer.eos_token_id)
+        user_prompt["attention_mask"].append(1)
+
+    user_prompt["labels"] = user_prompt["input_ids"].copy()
+
+    return user_prompt
 
 
 def load_data(data_args, tokenizer):
@@ -253,7 +230,7 @@ def train(model_args, data_args, training_args, model, tokenizer, train_data, va
         eval_dataset=val_data,
         args=training_args,
         data_collator=transformers.DataCollatorForLanguageModeling(
-            tokenizer, mlm=False
+            tokenizer, mlm=False, pad_to_multiple_of=8, return_tensors="pt"
         ),
     )
     model.config.use_cache = False
@@ -415,7 +392,15 @@ def main():
 
     model, tokenizer = load_model_tokenizer(model_args)
     train_files, validation_file = load_data(data_args, tokenizer)
-    train(model_args, data_args, training_args, model, tokenizer, train_files, validation_file)
+    train(
+        model_args,
+        data_args,
+        training_args,
+        model,
+        tokenizer,
+        train_files,
+        validation_file,
+    )
 
 
 if __name__ == "__main__":
