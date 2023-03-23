@@ -163,6 +163,8 @@ def load_model_tokenizer(model_args):
     )
     model = get_peft_model(model, config)
 
+    # model = torch.compile(model)
+
     return model, tokenizer
 
 
@@ -204,7 +206,9 @@ def load_data(data_args, tokenizer):
             .map(
                 lambda x: generate_and_tokenize_prompt(
                     x, lang, tokenizer, data_args.block_size
-                )
+                ),
+                load_from_cache_file=not data_args.overwrite_cache,
+                desc=f"Running tokenizer on {lang} dataset",
             )
         )
         datasets.append(train_data)
@@ -239,10 +243,6 @@ def train(model_args, data_args, training_args, model, tokenizer, train_data, va
     model.state_dict = (
         lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
     ).__get__(model, type(model))
-
-    model.config.to_json_file(
-        os.path.join(training_args.output_dir, "adapter_config.json")
-    )
 
     trainer.train()
 

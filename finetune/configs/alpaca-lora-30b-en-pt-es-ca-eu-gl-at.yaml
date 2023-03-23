@@ -1,5 +1,5 @@
 # model arguments
-model_name_or_path: decapoda-research/llama-13b-hf
+model_name_or_path: decapoda-research/llama-30b-hf
 use_fast_tokenizer: false
 torch_dtype: float16
 
@@ -7,11 +7,17 @@ torch_dtype: float16
 dataset_name: HiTZ/alpaca_mt
 dataset_config_names:
   - en
+  - pt
+  - es
+  - ca
+  - eu
+  - gl
+  - at
 validation_split_percentage: 4
 block_size: 256
 
 # checkpoint settings
-output_dir: out/alpaca-lora-13b-eu
+output_dir: out/alpaca-lora-30b-en-pt-es-ca-eu-gl-at
 overwrite_output_dir: true
 load_best_model_at_end: true
 metric_for_best_model: eval_loss
@@ -26,16 +32,16 @@ evaluation_strategy: steps
 logging_steps: 10
 eval_steps: 100
 
-# batch size: 16 batch size * 8 gradaccum * 1 GPUs = 128
-per_device_train_batch_size: 16
-per_device_eval_batch_size: 16
-gradient_accumulation_steps: 8
+# batch size: 6 batch size * 7 gradaccum * 3 GPUs = 126
+per_device_train_batch_size: 6
+per_device_eval_batch_size: 6
+gradient_accumulation_steps: 7
 
 # optimizer settings
 optim: adamw_torch
 learning_rate: 0.0003
 weight_decay: 0
-num_train_epochs: 3
+num_train_epochs: 1
 lr_scheduler_type: cosine
 warmup_ratio: 0.03
 
@@ -49,12 +55,12 @@ target_modules:
 
 # reporting
 report_to: wandb
-run_name: alpaca-lora-13b-eu
+run_name: alpaca-lora-30b-en-pt-es-ca-eu-gl-at
 
 # hub settings
 push_to_hub: true
 resume_from_checkpoint: false
-hub_model_id: HiTZ/alpaca-lora-13b-eu
+hub_model_id: HiTZ/alpaca-lora-30b-en-pt-es-ca-eu-gl-at
 hub_private_repo: true
 
 # performance
