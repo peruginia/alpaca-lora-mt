@@ -148,10 +148,7 @@ def load_model_tokenizer(model_args):
             use_fast=model_args.use_fast_tokenizer,
         )
 
-    tokenizer.add_special_tokens(
-        {"pad_token": "[PAD]"}
-    )  # Add pad token to the tokenizer
-    model.resize_token_embeddings(len(tokenizer))  # Resize the model's embeddings
+    tokenizer.pad_token_id = 0  # unk. we want this to be different from the eos token
     tokenizer.padding_side = "left"  # Allow batched inference
 
     model = prepare_model_for_int8_training(model)
