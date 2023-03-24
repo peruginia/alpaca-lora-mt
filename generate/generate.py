@@ -13,6 +13,7 @@ LANG_CODES = {
     "Catalan": "ca",
     "Basque": "eu",
     "Galician": "gl",
+    "Asturian": "at",
 }
 
 PROMPTS = {
@@ -109,6 +110,7 @@ RESPONSE = {
     "ca": "Resposta",
     "eu": "Erantzuna",
     "gl": "Resposta",
+    "at": "Respuesta",
 }
 
 EXAMPLES = {
@@ -260,10 +262,56 @@ EXAMPLES = {
             "Galician",
         ],
     ],
+    "at": [
+        ["Fálame de les alpaques.", None, "Asturian"],
+        ["Fálame del presidente de México en 2019.", None, "Asturian"],
+        ["Fálame del rei de Francia en 2019.", None, "Asturian"],
+        ["Llista de toles provincies canadienses n'orde alfabéticu.", None, "Asturian"],
+        [
+            "Escribe un programa en Python qu'imprima los primeres 10 númberos de Fibonacci.",
+            None,
+            "Asturian",
+        ],
+        [
+            "Escriba un programa qu'imprima los númberos del 1 al 100. Pero para los múltiplos de trés, escriba 'Fizz' en llugar del númberu y para los múltiplos de cinco, escriba 'Buzz'. Para los númberos que son múltiplos de trés y de cinco, escriba 'FizzBuzz'.",
+            None,
+            "Asturian",
+        ],
+        ["Dime cinco palabres que rimen con 'choque'.", None, "Asturian"],
+        [
+            "Traducir la oración 'Nun tengo boca pero tengo de glayar' al español.",
+            None,
+            "Asturian",
+        ],
+    ],
 }
 
-BASE_MODEL = "decapoda-research/llama-7b-hf"
-LORA_MODEL = "HiTZ/alpaca-lora-7b"
+BASE_MODELS = [
+    "decapoda-research/llama-7b-hf",
+    # "decapoda-research/llama-13b-hf",
+    # "decapoda-research/llama-30b-hf",
+    # "decapoda-research/llama-65b-hf",
+]
+
+LORA_BASE_MODELS = {
+    "HiTZ/alpaca-lora-7b-en": "decapoda-research/llama-7b-hf",
+    # "tloen/alpaca-lora-7b": "decapoda-research/llama-7b-hf",
+    # "chansung/alpaca-lora-13b": "decapoda-research/llama-13b-hf",
+    # "chansung/alpaca-lora-30b": "decapoda-research/llama-30b-hf",
+}
+
+BASE_LORA_MODELS = {
+    "decapoda-research/llama-7b-hf": [
+        "HiTZ/alpaca-lora-7b-en-pt-es-ca-eu-gl-at",
+        "HiTZ/alpaca-lora-7b-en",
+        "HiTZ/alpaca-lora-7b-pt",
+        "HiTZ/alpaca-lora-7b-es",
+        "HiTZ/alpaca-lora-7b-ca",
+        "HiTZ/alpaca-lora-7b-eu",
+        "HiTZ/alpaca-lora-7b-gl",
+        "HiTZ/alpaca-lora-7b-at",
+    ]
+}
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -321,7 +369,72 @@ def load_model_tokenizer(base_model_name, lora_model_name):
     return base_model, lora_model, tokenizer
 
 
-base_model, lora_model, tokenizer = load_model_tokenizer(BASE_MODEL, LORA_MODEL)
+def load_base_model(base_model_name):
+    if device == "cuda":
+        base_model = LlamaForCausalLM.from_pretrained(
+            base_model_name,
+            load_in_8bit=True,
+            torch_dtype=torch.float16,
+            device_map="auto",
+        )
+    elif device == "mps":
+        base_model = LlamaForCausalLM.from_pretrained(
+            base_model_name,
+            device_map={"": device},
+            torch_dtype=torch.float16,
+        )
+    else:
+        base_model = LlamaForCausalLM.from_pretrained(
+            base_model_name, device_map={"": device}, low_cpu_mem_usage=True
+        )
+
+    base_model.eval()
+    """
+    if torch.__version__ >= "2":
+        model = torch.compile(model)
+    """
+    return base_model
+
+
+def load_lora_model(base_model, lora_model_name):
+    if device == "cuda":
+        lora_model = PeftModel.from_pretrained(
+            base_model, lora_model_name, torch_dtype=torch.float16
+        )
+    elif device == "mps":
+        lora_model = PeftModel.from_pretrained(
+            base_model,
+            lora_model_name,
+            device_map={"": device},
+            torch_dtype=torch.float16,
+        )
+    else:
+        lora_model = PeftModel.from_pretrained(
+            base_model,
+            lora_model_name,
+            device_map={"": device},
+        )
+
+    lora_model.eval()
+    """
+    if torch.__version__ >= "2":
+        model = torch.compile(model)
+    """
+    return lora_model
+
+
+tokenizer = LlamaTokenizer.from_pretrained(BASE_MODELS[0])
+
+base_models = {}
+lora_models = {}
+for base_model_name, lora_model_names in BASE_LORA_MODELS.items():
+    print("Loading base model: " + base_model_name)
+    base_models[base_model_name] = load_base_model(base_model_name)
+    for lora_model_name in lora_model_names:
+        print("Loading lora model: " + lora_model_name)
+        lora_models[lora_model_name] = load_lora_model(
+            base_models[base_model_name], lora_model_name
+        )
 
 
 def generate_prompt(data_point, lang):
@@ -382,10 +495,6 @@ def test_GPT_unconstrained(
 
         inputs_ids = model_inputs["input_ids"]
 
-        print("UNCONSTRAINED")
-        for x in inputs_ids[0]:
-            print(x, tokenizer.decode(x))
-
         while (
             len(inputs_ids[0]) < max_new_tokens
             and inputs_ids[0][-1] != tokenizer.eos_token_id
@@ -401,11 +510,6 @@ def test_GPT_unconstrained(
                 logits = logits[:, -1, :]
                 logits = torch.nn.functional.softmax(logits, dim=-1)
                 next_word_id = torch.argmax(logits, dim=-1).unsqueeze(0)
-                print(
-                    next_word_id[0],
-                    logits[0, next_word_id[0]],
-                    tokenizer.decode(next_word_id[0]),
-                )
             elif generation_mode == "multinomial":
                 logits = logits[:, -1, :] / temperature
                 filtered_logits = top_k_top_p_filtering(
@@ -440,25 +544,10 @@ def evaluate(
     decoding_strategy="multinomial",
     **kwargs,
 ):
-    global base_model
-    global lora_model
-    if model_name == BASE_MODEL:
-        model = base_model
-    elif model_name == LORA_MODEL:
-        model = lora_model
-    elif "llama" in model_name:
-        base_model = LlamaForCausalLM.from_pretrained(
-            model_name,
-            load_in_8bit=True,
-            torch_dtype=torch.float16,
-            device_map="auto",
-        )
-        model = base_model
-    elif "lora" in model_name:
-        lora_model = PeftModel.from_pretrained(
-            base_model, model_name, torch_dtype=torch.float16
-        )
-        model = lora_model
+    if model_name in BASE_MODELS:
+        model = base_models[model_name]
+    else:
+        model = load_lora_model(base_models[BASE_MODELS[0]], model_name)
     data_point = {"instruction": instruction, "input": input}
     prompt = generate_prompt(data_point, LANG_CODES[language])
     inputs = tokenizer(prompt, return_tensors="pt")
@@ -497,25 +586,10 @@ def generate(
     generation_mode="multinomial",
     **kwargs,
 ):
-    global base_model
-    global lora_model
-    if model_name == BASE_MODEL:
-        model = base_model
-    elif model_name == LORA_MODEL:
-        model = lora_model
-    elif "llama" in model_name:
-        base_model = LlamaForCausalLM.from_pretrained(
-            model_name,
-            load_in_8bit=True,
-            torch_dtype=torch.float16,
-            device_map="auto",
-        )
-        model = base_model
-    elif "lora" in model_name:
-        lora_model = PeftModel.from_pretrained(
-            base_model, model_name, torch_dtype=torch.float16
-        )
-        model = lora_model
+    if model_name in BASE_MODELS:
+        model = base_models[model_name]
+    else:
+        model = load_lora_model(base_models[BASE_MODELS[0]], model_name)
     data_point = {"instruction": instruction, "input": input}
     prompt = generate_prompt(data_point, LANG_CODES[language])
     for x in test_GPT_unconstrained(
@@ -556,23 +630,15 @@ demo = gr.Interface(
                 "Catalan",
                 "Basque",
                 "Galician",
+                "Asturian",
             ],
             label="Prompt Language",
             interactive=True,
             info="Select a language for the prompt.",
         ),
         gr.components.Radio(
-            value="HiTZ/alpaca-lora-7b",
-            choices=[
-                "HiTZ/alpaca-lora-7b",
-                # "chansung/alpaca-lora-13b",
-                # "chansung/alpaca-lora-30b",
-                "22h/cabrita-lora-v0-1",
-                "decapoda-research/llama-7b-hf",
-                # "decapoda-research/llama-13b-hf",
-                # "decapoda-research/llama-30b-hf",
-                # "decapoda-research/llama-65b-hf",
-            ],
+            value=BASE_LORA_MODELS[BASE_MODELS[0]][0],
+            choices=BASE_LORA_MODELS[BASE_MODELS[0]],
             label="Model",
             interactive=True,
             info="Select a model to use for generation. LLaMa models are pretrained-only, LoRA models are fine-tuned on the Alpaca dataset.",
@@ -638,4 +704,4 @@ demo = gr.Interface(
     ],
 )
 demo.queue(concurrency_count=1)
-demo.launch()
+demo.launch(debug=True)
