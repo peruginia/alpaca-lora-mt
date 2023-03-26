@@ -115,172 +115,147 @@ RESPONSE = {
 
 EXAMPLES = {
     "en": [
-        ["Tell me about alpacas.", None, "English"],
-        ["Tell me about the president of Mexico in 2019.", None, "English"],
-        ["Tell me about the king of France in 2019.", None, "English"],
-        ["List all Canadian provinces in alphabetical order.", None, "English"],
+        ["Tell me about alpacas.", "English"],
+        ["Tell me about the president of Mexico in 2019.", "English"],
+        ["Tell me about the king of France in 2019.", "English"],
+        ["List all Canadian provinces in alphabetical order.", "English"],
         [
             "Write a Python program that prints the first 10 Fibonacci numbers.",
-            None,
             "English",
         ],
         [
             "Write a program that prints the numbers from 1 to 100. But for multiples of three print 'Fizz' instead of the number and for the multiples of five print 'Buzz'. For numbers which are multiples of both three and five print 'FizzBuzz'.",
-            None,
             "English",
         ],
-        ["Tell me five words that rhyme with 'shock'.", None, "English"],
+        ["Tell me five words that rhyme with 'shock'.", "English"],
         [
             "Translate the sentence 'I have no mouth but I must scream' into Spanish.",
-            None,
             "English",
         ],
     ],
     "pt": [
-        ["Conte-me sobre alpacas.", None, "Portuguese"],
-        ["Conte-me sobre o presidente do México em 2019.", None, "Portuguese"],
-        ["Conte-me sobre o rei da França em 2019.", None, "Portuguese"],
+        ["Conte-me sobre alpacas.", "Portuguese"],
+        ["Conte-me sobre o presidente do México em 2019.", "Portuguese"],
+        ["Conte-me sobre o rei da França em 2019.", "Portuguese"],
         [
             "Liste todas as províncias canadenses em ordem alfabética.",
-            None,
             "Portuguese",
         ],
         [
             "Escreva um programa Python que imprima os primeiros 10 números de Fibonacci.",
-            None,
             "Portuguese",
         ],
         [
             "Escreva um programa que imprima os números de 1 a 100. Mas para múltiplos de três imprima 'Fizz' em vez do número e para múltiplos de cinco imprima 'Buzz'. Para números que são múltiplos de três e cinco imprima 'FizzBuzz'.",
-            None,
             "Portuguese",
         ],
-        ["Diga-me cinco palavras que rimam com 'choque'.", None, "Portuguese"],
+        ["Diga-me cinco palavras que rimam com 'choque'.", "Portuguese"],
         [
             "Traduza a frase 'Não tenho boca, mas devo gritar' para o espanhol.",
-            None,
             "Portuguese",
         ],
     ],
     "es": [
-        ["Háblame de las alpacas.", None, "Spanish"],
-        ["Háblame del presidente de México en 2019.", None, "Spanish"],
-        ["Háblame del rey de Francia en 2019.", None, "Spanish"],
+        ["Háblame de las alpacas.", "Spanish"],
+        ["Háblame del presidente de México en 2019.", "Spanish"],
+        ["Háblame del rey de Francia en 2019.", "Spanish"],
         [
             "Lista de todas las provincias canadienses en orden alfabético.",
-            None,
             "Spanish",
         ],
         [
             "Escribe un programa en Python que imprima los primeros 10 números de Fibonacci.",
-            None,
             "Spanish",
         ],
         [
             "Escriba un programa que imprima los números del 1 al 100. Pero para los múltiplos de tres, escriba 'Fizz' en lugar del número y para los múltiplos de cinco, escriba 'Buzz'. Para los números que son múltiplos de tres y de cinco, escriba 'FizzBuzz'.",
-            None,
             "Spanish",
         ],
-        ["Dime cinco palabras que rimen con 'choque'.", None, "Spanish"],
+        ["Dime cinco palabras que rimen con 'choque'.", "Spanish"],
         [
             "Traducir la oración 'No tengo boca pero debo gritar' al inglés.",
-            None,
             "Spanish",
         ],
     ],
     "ca": [
-        ["Parla'm de les alpaques.", None, "Catalan"],
-        ["Parla'm del president de Mèxic el 2019.", None, "Catalan"],
-        ["Parla'm del rei de França el 2019.", None, "Catalan"],
+        ["Parla'm de les alpaques.", "Catalan"],
+        ["Parla'm del president de Mèxic el 2019.", "Catalan"],
+        ["Parla'm del rei de França el 2019.", "Catalan"],
         [
             "Llista totes les províncies canadenques per ordre alfabètic.",
-            None,
             "Catalan",
         ],
         [
             "Escriu un programa Python que imprimeixi els primers 10 nombres de Fibonacci.",
-            None,
             "Catalan",
         ],
         [
             "Escriu un programa que imprimeixi els números de l'1 al 100. Però per a múltiples de tres escriviu 'Fizz' en comptes del nombre i per als múltiples de cinc imprimiu 'Buzz'. Per als números que són múltiples de tres i cinc imprimiu 'FizzBuzz'.",
-            None,
             "Catalan",
         ],
-        ["Digues-me cinc paraules que rimin amb 'xoc'.", None, "Catalan"],
+        ["Digues-me cinc paraules que rimin amb 'xoc'.", "Catalan"],
         [
             "Tradueix la frase 'No tinc boca, però he de cridar' al castellà.",
-            None,
             "Catalan",
         ],
     ],
     "eu": [
-        ["Hitz egin alpakei buruz.", None, "Basque"],
-        ["Hitz egin 2019ko Mexikoko presidenteaz.", None, "Basque"],
-        ["Hitz egin 2019ko Frantziako erregeaz.", None, "Basque"],
-        ["Zerrendatu Kanadako probintzia guztiak ordena alfabetikoan.", None, "Basque"],
+        ["Hitz egin alpakei buruz.", "Basque"],
+        ["Hitz egin 2019ko Mexikoko presidenteaz.", "Basque"],
+        ["Hitz egin 2019ko Frantziako erregeaz.", "Basque"],
+        ["Zerrendatu Kanadako probintzia guztiak ordena alfabetikoan.", "Basque"],
         [
             "Idatzi lehen 10 Fibonacci zenbakiak inprimatzen dituen Python programa bat.",
-            None,
             "Basque",
         ],
         [
             "Idatzi 1etik 100era bitarteko zenbakiak inprimatzen dituen programa bat. Baina hiruren multiploetarako inprimatu 'Fizz' zenbakiaren ordez eta bosten multiploetarako inprimatu 'Buzz'. Hiru eta bosten multiploak diren zenbakietarako inprimatu 'FizzBuzz'.",
-            None,
             "Basque",
         ],
-        ["Esan 'deskarga' hitzaren errima duten bost hitz.", None, "Basque"],
+        ["Esan 'deskarga' hitzaren errima duten bost hitz.", "Basque"],
         [
             "Itzuli 'Ez dut ahorik baina garrasi egin behar dut' esaldia gaztelaniara.",
-            None,
             "Basque",
         ],
     ],
     "gl": [
-        ["Fálame de alpacas.", None, "Galician"],
-        ["Fálame do presidente de México en 2019.", None, "Galician"],
-        ["Fálame do rei de Francia en 2019.", None, "Galician"],
+        ["Fálame de alpacas.", "Galician"],
+        ["Fálame do presidente de México en 2019.", "Galician"],
+        ["Fálame do rei de Francia en 2019.", "Galician"],
         [
             "Enumere todas as provincias canadenses por orde alfabética.",
-            None,
             "Galician",
         ],
         [
             "Escribe un programa Python que imprima os primeiros 10 números de Fibonacci.",
-            None,
             "Galician",
         ],
         [
             "Escribe un programa que imprima os números do 1 ao 100. Pero para múltiplos de tres escribe 'Fizz' en lugar do número e para os múltiplos de cinco imprime 'Buzz'. Para números que son múltiplos de tres e cinco imprime 'FizzBuzz'.",
-            None,
             "Galician",
         ],
-        ["Dime cinco palabras que riman con 'choque'.", None, "Galician"],
+        ["Dime cinco palabras que riman con 'choque'.", "Galician"],
         [
             "Traducir ao castelán a frase 'Non teño boca pero debo berrar'.",
-            None,
             "Galician",
         ],
     ],
     "at": [
-        ["Fálame de les alpaques.", None, "Asturian"],
-        ["Fálame del presidente de México en 2019.", None, "Asturian"],
-        ["Fálame del rei de Francia en 2019.", None, "Asturian"],
-        ["Llista de toles provincies canadienses n'orde alfabéticu.", None, "Asturian"],
+        ["Fálame de les alpaques.", "Asturian"],
+        ["Fálame del presidente de México en 2019.", "Asturian"],
+        ["Fálame del rei de Francia en 2019.", "Asturian"],
+        ["Llista de toles provincies canadienses n'orde alfabéticu.", "Asturian"],
         [
             "Escribe un programa en Python qu'imprima los primeres 10 númberos de Fibonacci.",
-            None,
             "Asturian",
         ],
         [
             "Escriba un programa qu'imprima los númberos del 1 al 100. Pero para los múltiplos de trés, escriba 'Fizz' en llugar del númberu y para los múltiplos de cinco, escriba 'Buzz'. Para los númberos que son múltiplos de trés y de cinco, escriba 'FizzBuzz'.",
-            None,
             "Asturian",
         ],
-        ["Dime cinco palabres que rimen con 'choque'.", None, "Asturian"],
+        ["Dime cinco palabres que rimen con 'choque'.", "Asturian"],
         [
             "Traducir la oración 'Nun tengo boca pero tengo de glayar' al español.",
-            None,
             "Asturian",
         ],
     ],
@@ -293,24 +268,17 @@ BASE_MODELS = [
     # "decapoda-research/llama-65b-hf",
 ]
 
-LORA_BASE_MODELS = {
-    "HiTZ/alpaca-lora-7b-en": "decapoda-research/llama-7b-hf",
-    # "tloen/alpaca-lora-7b": "decapoda-research/llama-7b-hf",
-    # "chansung/alpaca-lora-13b": "decapoda-research/llama-13b-hf",
-    # "chansung/alpaca-lora-30b": "decapoda-research/llama-30b-hf",
-}
-
 BASE_LORA_MODELS = {
-    "decapoda-research/llama-7b-hf": [
-        "HiTZ/alpaca-lora-7b-en-pt-es-ca-eu-gl-at",
-        "HiTZ/alpaca-lora-7b-en",
-        "HiTZ/alpaca-lora-7b-pt",
-        "HiTZ/alpaca-lora-7b-es",
-        "HiTZ/alpaca-lora-7b-ca",
-        "HiTZ/alpaca-lora-7b-eu",
-        "HiTZ/alpaca-lora-7b-gl",
-        "HiTZ/alpaca-lora-7b-at",
-    ]
+    "decapoda-research/llama-7b-hf": {
+        "Multilingual": "HiTZ/alpaca-lora-7b-en-pt-es-ca-eu-gl-at",
+        "English": "HiTZ/alpaca-lora-7b-en",
+        "Portuguese": "HiTZ/alpaca-lora-7b-pt",
+        "Spanish": "HiTZ/alpaca-lora-7b-es",
+        "Catalan": "HiTZ/alpaca-lora-7b-ca",
+        "Basque": "HiTZ/alpaca-lora-7b-eu",
+        "Galician": "HiTZ/alpaca-lora-7b-gl",
+        "Asturian": "HiTZ/alpaca-lora-7b-at",
+    }
 }
 
 if torch.cuda.is_available():
@@ -426,18 +394,13 @@ def load_lora_model(base_model, lora_model_name):
 tokenizer = LlamaTokenizer.from_pretrained(BASE_MODELS[0])
 
 base_models = {}
-lora_models = {}
-for base_model_name, lora_model_names in BASE_LORA_MODELS.items():
+for base_model_name in BASE_MODELS:
     print("Loading base model: " + base_model_name)
     base_models[base_model_name] = load_base_model(base_model_name)
-    for lora_model_name in lora_model_names:
-        print("Loading lora model: " + lora_model_name)
-        lora_models[lora_model_name] = load_lora_model(
-            base_models[base_model_name], lora_model_name
-        )
 
 
 def generate_prompt(data_point, lang):
+    lang = "en"
     if data_point["input"]:
         return PROMPTS[lang]["prompt_input"].format_map(data_point)
     else:
@@ -533,9 +496,7 @@ def test_GPT_unconstrained(
 
 def evaluate(
     instruction,
-    input,
     language,
-    model_name,
     temperature=0.1,
     top_p=0.75,
     top_k=40,
@@ -544,11 +505,10 @@ def evaluate(
     decoding_strategy="multinomial",
     **kwargs,
 ):
-    if model_name in BASE_MODELS:
-        model = base_models[model_name]
-    else:
-        model = load_lora_model(base_models[BASE_MODELS[0]], model_name)
-    data_point = {"instruction": instruction, "input": input}
+    model = load_lora_model(
+        base_models[BASE_MODELS[0]], BASE_LORA_MODELS[BASE_MODELS[0]][language]
+    )
+    data_point = {"instruction": instruction, "input": None}
     prompt = generate_prompt(data_point, LANG_CODES[language])
     inputs = tokenizer(prompt, return_tensors="pt")
     input_ids = inputs["input_ids"].to(device)
@@ -575,28 +535,24 @@ def evaluate(
 
 def generate(
     instruction,
-    input,
     language,
-    model_name,
     temperature=0.1,
     top_p=0.75,
     top_k=40,
     max_new_tokens=256,
-    num_beams=4,
     generation_mode="multinomial",
     **kwargs,
 ):
-    if model_name in BASE_MODELS:
-        model = base_models[model_name]
-    else:
-        model = load_lora_model(base_models[BASE_MODELS[0]], model_name)
-    data_point = {"instruction": instruction, "input": input}
-    prompt = generate_prompt(data_point, LANG_CODES[language])
+    model = load_lora_model(
+        base_models[BASE_MODELS[0]], BASE_LORA_MODELS[BASE_MODELS[0]][language]
+    )
+    data_point = {"instruction": instruction, "input": None}
+    prompt = generate_prompt(data_point, "en")
     for x in test_GPT_unconstrained(
         tokenizer,
         model,
         prompt,
-        language=language,
+        language="English",
         temperature=temperature,
         top_p=top_p,
         top_k=top_k,
@@ -615,15 +571,10 @@ demo = gr.Interface(
             placeholder="Tell me about alpacas.",
             info="Describe the task the model should perform.",
         ),
-        gr.components.Textbox(
-            lines=2,
-            label="Input",
-            placeholder=None,
-            info="Optional context or input for the task",
-        ),
         gr.components.Radio(
-            value="English",
+            value="Multilingual",
             choices=[
+                "Multilingual",
                 "English",
                 "Portuguese",
                 "Spanish",
@@ -632,21 +583,14 @@ demo = gr.Interface(
                 "Galician",
                 "Asturian",
             ],
-            label="Prompt Language",
+            label="Model Language",
             interactive=True,
-            info="Select a language for the prompt.",
-        ),
-        gr.components.Radio(
-            value=BASE_LORA_MODELS[BASE_MODELS[0]][0],
-            choices=BASE_LORA_MODELS[BASE_MODELS[0]],
-            label="Model",
-            interactive=True,
-            info="Select a model to use for generation. LLaMa models are pretrained-only, LoRA models are fine-tuned on the Alpaca dataset.",
+            info="Select fine-tuning language for the model.",
         ),
         gr.components.Slider(
             minimum=0,
             maximum=1,
-            value=0.1,
+            value=0.9,
             label="Temperature",
             info="Temperature for Multinomial Sampling[0.1, 1.0].",
         ),
@@ -674,16 +618,7 @@ demo = gr.Interface(
             info="Total numbers of tokens (prompt + generated). Use with care, "
             "a large value will be slower [30, 1024]",
         ),
-        gr.components.Slider(
-            minimum=1,
-            maximum=4,
-            step=1,
-            value=4,
-            label="Num Beams",
-            info="Total numbers of beams for beam-search decoding.",
-        ),
         gr.components.Radio(
-            # choices=["multinomial", "greedy", "beam-search", "beam-search multinomial"],
             choices=["multinomial", "greedy"],
             label="Decoding strategy",
             value="multinomial",
