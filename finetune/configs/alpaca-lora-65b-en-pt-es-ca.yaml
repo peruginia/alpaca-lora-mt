@@ -56,7 +56,7 @@ run_name: alpaca-lora-65b-en-pt-es-ca
 
 # hub settings
 push_to_hub: true
-resume_from_checkpoint: false
+resume_from_checkpoint: out/alpaca-lora-65b-en-pt-es-ca/checkpoint-1100
 hub_model_id: HiTZ/alpaca-lora-65b-en-pt-es-ca
 hub_private_repo: true
 

@@ -20,6 +20,7 @@ from peft import (
     LoraConfig,
     get_peft_model,
     get_peft_model_state_dict,
+    set_peft_model_state_dict,
 )
 
 PROMPTS = {
@@ -110,7 +111,7 @@ PROMPTS = {
 }
 
 
-def load_model_tokenizer(model_args):
+def load_model_tokenizer(model_args, training_args):
     """Load the model and tokenizer from the model name or path.
 
     Args:
@@ -163,7 +164,27 @@ def load_model_tokenizer(model_args):
     )
     model = get_peft_model(model, config)
 
-    # model = torch.compile(model)
+    if training_args.resume_from_checkpoint:
+        # Check the available weights and load them
+        checkpoint_name = os.path.join(
+            training_args.resume_from_checkpoint, "pytorch_model.bin"
+        )  # Full checkpoint
+        if not os.path.exists(checkpoint_name):
+            checkpoint_name = os.path.join(
+                training_args.resume_from_checkpoint, "adapter_model.bin"
+            )  # only LoRA model - LoRA config above has to fit
+            training_args.resume_from_checkpoint = (
+                False  # So the trainer won't try loading its state
+            )
+        # The two files above have a different name depending on how they were saved, but are actually the same.
+        if os.path.exists(checkpoint_name):
+            print(f"Restarting from {checkpoint_name}")
+            adapters_weights = torch.load(checkpoint_name)
+            model = set_peft_model_state_dict(model, adapters_weights)
+        else:
+            print(f"Checkpoint {checkpoint_name} not found")
+
+    model.print_trainable_parameters()  # Be more transparent about the % of trainable params.
 
     return model, tokenizer
 
@@ -244,7 +265,7 @@ def train(model_args, data_args, training_args, model, tokenizer, train_data, va
         lambda self, *_, **__: get_peft_model_state_dict(self, old_state_dict())
     ).__get__(model, type(model))
 
-    trainer.train()
+    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
 
     trainer.save_model()
 
@@ -390,7 +411,7 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    model, tokenizer = load_model_tokenizer(model_args)
+    model, tokenizer = load_model_tokenizer(model_args, training_args)
     train_files, validation_file = load_data(data_args, tokenizer)
     train(
         model_args,
