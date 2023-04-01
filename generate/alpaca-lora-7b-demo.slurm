@@ -17,4 +17,4 @@ source ../venv/bin/activate
 # transformers cache
 export TRANSFORMERS_CACHE="/gaueko0/transformers_cache/"
 
-srun python3 generate.py
+srun gradio generate.py

@@ -17,12 +17,10 @@ export TRANSFORMERS_CACHE="/gaueko0/transformers_cache/"
 
 export CUDA_VISIBLE_DEVICES=0
 
-BASE_URL=decapoda-research/llama-7b-hf
+BASE_URL=/gaueko1/hizkuntza-ereduak/LLaMA/lm/huggingface/7B
 FINETUNED_CKPT_URL=HiTZ/alpaca-lora-7b-en-pt-es-ca-eu-gl-at
 PORT=6007
 BATCH_SIZE=1
-API_OPEN=no
-SHARE=no
 GEN_CONFIG_PATH=Alpaca-LoRA-Serve/generation_config_default.yaml
 
 srun python3 Alpaca-LoRA-Serve/app.py \
@@ -30,6 +28,5 @@ srun python3 Alpaca-LoRA-Serve/app.py \
     --ft_ckpt_url $FINETUNED_CKPT_URL \
     --port $PORT \
     --batch_size $BATCH_SIZE \
-    --api_open $API_OPEN \
-    --share $SHARE \
-    --gen_config_path $GEN_CONFIG_PATH
+    --gen_config_path $GEN_CONFIG_PATH \
+    #--share
