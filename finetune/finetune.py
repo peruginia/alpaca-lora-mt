@@ -217,7 +217,10 @@ def generate_and_tokenize_prompt(data_point, lang, tokenizer, block_size):
 def load_data(data_args, tokenizer):
     data = DatasetDict()
     for lang in data_args.dataset_config_names:
-        data[lang] = load_dataset(data_args.dataset_name, lang)
+        if data_args.dataset_name.endswith(".json"):
+            data[lang] = load_dataset("json", data_files=data_args.dataset_name)
+        else:         
+            data[lang] = load_dataset(data_args.dataset_name, lang)
 
     datasets = []
     for lang in data:
